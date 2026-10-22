@@ -29,7 +29,7 @@ resource "google_compute_backend_service" "env" {
   ]
 
   backend {
-    group = google_compute_instance_group_manager.env[
+    group = google_compute_region_instance_group_manager.env[
       each.key
     ].instance_group
 

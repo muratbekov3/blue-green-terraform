@@ -1,9 +1,14 @@
-resource "google_compute_instance_group_manager" "env" {
+resource "google_compute_region_instance_group_manager" "env" {
   for_each = local.environments
 
   name               = "${var.name_prefix}-${each.key}-mig"
-  zone               = var.zone
+  region             = var.region
   base_instance_name = "${var.name_prefix}-${each.key}"
+
+  distribution_policy_zones = [
+    "${var.region}-a",
+    "${var.region}-b"
+  ]
 
   version {
     instance_template = google_compute_instance_template.env[each.key].id
